@@ -22,7 +22,7 @@ namespace VSMacAPI.API.Controllers
 	        {
 	            return NotFound();
 	        }
-	        
+
 	        return Ok(cityToReturn);
 	    }
 	}
