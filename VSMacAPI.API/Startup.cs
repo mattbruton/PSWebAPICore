@@ -4,9 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Formatters.Xml;
+using Newtonsoft.Json.Serialization;
 
 namespace VSMacAPI.API
 {
@@ -28,7 +31,19 @@ namespace VSMacAPI.API
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(o => o.OutputFormatters.Add(
+                new XmlDataContractSerializerOutputFormatter()));
+//                Since json will be in camel case by default, use the following if the case of json keys should
+//                match the case in the models.
+//                .AddJsonOptions(o =>
+//                {
+//                    if (o.SerializerSettings.ContractResolver != null)
+//                    {
+//                        var castedResolver = o.SerializerSettings.ContractResolver
+//                            as DefaultContractResolver;
+//                        castedResolver.NamingStrategy = null;
+//                    }
+//                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
